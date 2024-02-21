@@ -6,6 +6,7 @@ public class Usuario {
     private String id;
     private String correo;
     private  String contrasena;
+    private Banco banco;
 
     public Usuario(String nombre, String direccion, String id, String correo, String contrasena) {
         this.nombre = nombre;
@@ -57,4 +58,8 @@ public class Usuario {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
+
+    public Banco getBanco() { return banco; }
+
+    public void setBanco(Banco banco) { this.banco = banco; }
 }

@@ -1,9 +1,13 @@
 package co.edu.uniquindio.Banco.model;
 
+import java.util.ArrayList;
+
 public class Cuenta {
-    public String idCuenta;
+    private String idCuenta;
     private double saldo;
     private Usuario propietario;
+    private Banco banco;
+    private ArrayList<Transaccion> litsaTransacciones;
 
     public Cuenta(String idCuenta, double saldo, Usuario propietario) {
         this.idCuenta = idCuenta;
@@ -37,4 +41,12 @@ public class Cuenta {
     public void setPropietario(Usuario propietario) {
         this.propietario = propietario;
     }
+
+    public Banco getBanco() { return banco; }
+
+    public void setBanco(Banco banco) { this.banco = banco; }
+
+    public ArrayList<Transaccion> getLitsaTransacciones() { return litsaTransacciones; }
+
+    public void setLitsaTransacciones(ArrayList<Transaccion> litsaTransacciones) { this.litsaTransacciones = litsaTransacciones; }
 }
