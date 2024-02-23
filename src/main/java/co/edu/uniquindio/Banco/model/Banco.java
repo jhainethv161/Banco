@@ -10,6 +10,48 @@ public class Banco {
     private ArrayList<Usuario> listaUsuarios;
     private ArrayList<Cuenta> listaCuentas;
 
+    public Banco() {
+    }
+
+    public Banco(String nit, String nombre, ArrayList<Usuario> listaUsuarios, ArrayList<Cuenta> listaCuentas) {
+        this.nit = nit;
+        this.nombre = nombre;
+        this.listaUsuarios = listaUsuarios;
+        this.listaCuentas = listaCuentas;
+    }
+
+    public String getNit() {
+        return nit;
+    }
+
+    public void setNit(String nit) {
+        this.nit = nit;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public ArrayList<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
+    }
+
+    public ArrayList<Cuenta> getListaCuentas() {
+        return listaCuentas;
+    }
+
+    public void setListaCuentas(ArrayList<Cuenta> listaCuentas) {
+        this.listaCuentas = listaCuentas;
+    }
+
     public String crearUsuario(String nombre, String direccion, String id, String correo, String contrasena){
         if (buscarUsuario(id)==null){
             Usuario usuario = new Usuario(nombre, direccion,id,correo,contrasena);
@@ -79,6 +121,28 @@ public class Banco {
             Cuenta cuenta = buscarCuenta(idCuenta);
             String mensaje = "Saldo"+cuenta.getSaldo()+"\n"+
                     mostrarTransacciones(idCuenta);
+        }
+    }
+
+    public boolean validarExistencia(String numeroCuenta){
+        int tamanioLista = getListaCuentas().size();
+        boolean exist = false;
+
+        for (int i = 0; i < tamanioLista; i++) {
+            Cuenta cuenta = getListaCuentas().get(i);
+            if (cuenta.getIdCuenta().equalsIgnoreCase(numeroCuenta)) {
+                exist = true;
+                break;
+            }
+        }
+        return exist;
+    }
+
+    public boolean validarSaldo(Cuenta cuenta, double valor){
+        if (cuenta.getSaldo()>=valor){
+            return true;
+        }else {
+            return false;
         }
     }
 
