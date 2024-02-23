@@ -10,13 +10,13 @@ public class Banco {
     private ArrayList<Usuario> listaUsuarios;
     private ArrayList<Cuenta> listaCuentas;
 
-    public void crearUsuario(String nombre, String direccion, String id, String correo, String contrasena){
+    public String crearUsuario(String nombre, String direccion, String id, String correo, String contrasena){
         if (buscarUsuario(id)==null){
             Usuario usuario = new Usuario(nombre, direccion,id,correo,contrasena);
             listaUsuarios.add(usuario);
-            JOptionPane.showMessageDialog(null, "Usuario crado con exito");
+            return "Usuario crado con exito";
         }else{
-            JOptionPane.showMessageDialog(null, "El id ya se encuentra en el sistema, intentelo nuevamente");
+            return "El id ya se encuentra en el sistema, intentelo nuevamente";
         }
     }
 
@@ -33,14 +33,14 @@ public class Banco {
 
     }
 
-    public void eliminarUsuario(String id){
+    public String eliminarUsuario(String id){
         Usuario usuario = buscarUsuario(id);
         if (usuario!=null){
             eliminarCuentasUsuario(id);
             listaUsuarios.remove(usuario);
-            JOptionPane.showMessageDialog(null, "Usuario eliminado");
+            return "Usuario eliminado";
         }else{
-            JOptionPane.showMessageDialog(null, "Id no encontrado");
+            return "Id no encontrado";
         }
     }
 
@@ -63,11 +63,13 @@ public class Banco {
         return null;
     }
 
-    public void eliminarCuenta(String idCuenta){
+    public String eliminarCuenta(String idCuenta){
         Cuenta cuenta = buscarCuenta(idCuenta);
         if(cuenta!=null){
             listaCuentas.remove(cuenta);
-            JOptionPane.showMessageDialog(null, "Cuenta eliminada con exito");
+            return  "Cuenta eliminada con exito";
+        }else {
+            return  "Ocurrio un error al eliminar la cuenta";
         }
     }
 
@@ -77,7 +79,6 @@ public class Banco {
             Cuenta cuenta = buscarCuenta(idCuenta);
             String mensaje = "Saldo"+cuenta.getSaldo()+"\n"+
                     mostrarTransacciones(idCuenta);
-
         }
     }
 
