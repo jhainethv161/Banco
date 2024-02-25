@@ -3,21 +3,20 @@ package co.edu.uniquindio.Banco.model;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Banco {
     private String nit;
     private String nombre;
-    private ArrayList<Usuario> listaUsuarios;
-    private ArrayList<Cuenta> listaCuentas;
+    private ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+    private ArrayList<Cuenta> listaCuentas = new ArrayList<>();
 
     public Banco() {
     }
 
-    public Banco(String nit, String nombre, ArrayList<Usuario> listaUsuarios, ArrayList<Cuenta> listaCuentas) {
+    public Banco(String nit, String nombre) {
         this.nit = nit;
         this.nombre = nombre;
-        this.listaUsuarios = listaUsuarios;
-        this.listaCuentas = listaCuentas;
     }
 
     public String getNit() {
@@ -52,13 +51,13 @@ public class Banco {
         this.listaCuentas = listaCuentas;
     }
 
-    public String crearUsuario(String nombre, String direccion, String id, String correo, String contrasena){
+    public boolean crearUsuario(String nombre, String direccion, String id, String correo, String contrasena){
         if (buscarUsuario(id)==null){
             Usuario usuario = new Usuario(nombre, direccion,id,correo,contrasena);
             listaUsuarios.add(usuario);
-            return "Usuario crado con exito";
+            return true;
         }else{
-            return "El id ya se encuentra en el sistema, intentelo nuevamente";
+            return false;
         }
     }
 
@@ -71,9 +70,17 @@ public class Banco {
         return null;
     }
 
-    public void actualizarUsuario(String nombre, String direccion, String id, String correo, String contrasena){
-
+    public boolean actualizarDatosUsuario(String id, String nuevaDireccion, String nuevoCorreo) {
+        Usuario usuario = buscarUsuario(id);
+        if (usuario != null) {
+            usuario.setDireccion(nuevaDireccion);
+            usuario.setCorreo(nuevoCorreo);
+            return true;
+        } else {
+            return false;
+        }
     }
+
 
     public String eliminarUsuario(String id){
         Usuario usuario = buscarUsuario(id);
@@ -115,16 +122,41 @@ public class Banco {
         }
     }
 
-    public void consultarSaldoCuenta(String idUsuario, String contrasena, String idCuenta){
+    public String consultarSaldoCuenta(String idUsuario, String contrasena, String idCuenta){
         Usuario usuario = buscarUsuario(idUsuario);
+        String mensaje = "";
         if (usuario!= null && usuario.getContrasena().equals(contrasena)){
             Cuenta cuenta = buscarCuenta(idCuenta);
-            String mensaje = "Saldo"+cuenta.getSaldo()+"\n"+
+            mensaje = "Saldo"+cuenta.getSaldo()+"\n"+
                     mostrarTransacciones(idCuenta);
         }
+        return mensaje;
     }
 
-    public boolean validarExistencia(String numeroCuenta){
+    public String generarNumeroCuenta() {
+        Random random = new Random();
+        String numeroAleatorio = "";
+        for (int i = 0; i < 10; i++) {
+            numeroAleatorio += random.nextInt(10);
+        }
+        return numeroAleatorio;
+    }
+
+    public String crearCuenta(double saldo, Usuario propietario){
+        boolean existe = true;
+        String numeroCuenta = "";
+        do {
+            numeroCuenta = generarNumeroCuenta();
+            if (validarExistenciaCuenta(numeroCuenta)== false){
+                existe = false;
+            }
+        }while(existe == true);
+
+        Cuenta cuenta = new Cuenta(numeroCuenta, saldo, propietario);
+        return numeroCuenta;
+    }
+
+    public boolean validarExistenciaCuenta(String numeroCuenta){
         int tamanioLista = getListaCuentas().size();
         boolean exist = false;
 
@@ -138,7 +170,7 @@ public class Banco {
         return exist;
     }
 
-    public boolean validarSaldo(Cuenta cuenta, double valor){
+    public boolean validarSaldoCuenta(Cuenta cuenta, double valor){
         if (cuenta.getSaldo()>=valor){
             return true;
         }else {

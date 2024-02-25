@@ -78,11 +78,11 @@ public class Cuenta {
      * @return String
      */
     public String crearTransaccion(Banco banco, double valor, Categoria categoria, String remitente, String destinatario) {
-        if (banco.validarExistencia(remitente)){
+        if (banco.validarExistenciaCuenta(remitente)){
             Cuenta cuentaRemitente = banco.buscarCuenta(remitente);
-            boolean existeciaDestinatario = banco.validarExistencia(destinatario);
+            boolean existeciaDestinatario = banco.validarExistenciaCuenta(destinatario);
             valor += 200;
-            boolean disponibilidadSaldo = banco.validarSaldo(cuentaRemitente, valor+200);
+            boolean disponibilidadSaldo = banco.validarSaldoCuenta(cuentaRemitente, valor+200);
             if (existeciaDestinatario && disponibilidadSaldo){
                 Cuenta cuentaDestinatario = banco.buscarCuenta(destinatario);
                 cobrarTransaccion(cuentaRemitente, cuentaDestinatario, valor);
@@ -95,8 +95,5 @@ public class Cuenta {
         }else {
             return "No es posible hacer la transaccion";
         }
-
-
-
     }
 }
