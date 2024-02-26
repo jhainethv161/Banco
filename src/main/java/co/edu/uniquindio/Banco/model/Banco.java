@@ -153,6 +153,7 @@ public class Banco {
         }while(existe == true);
 
         Cuenta cuenta = new Cuenta(numeroCuenta, saldo, propietario);
+        getListaCuentas().add(cuenta);
         return numeroCuenta;
     }
 

@@ -10,7 +10,7 @@ public class Cuenta {
     private double saldo;
     private Usuario propietario;
     private Banco banco;
-    private ArrayList<Transaccion> litsaTransacciones;
+    private ArrayList<Transaccion> litsaTransacciones = new ArrayList<>();
 
     public Cuenta(String idCuenta, double saldo, Usuario propietario) {
         this.idCuenta = idCuenta;
@@ -64,7 +64,7 @@ public class Cuenta {
         saldoRemitente -= valor;
         cuentaRemitente.setSaldo(saldoRemitente);
         double saldoDestinatario = cuentaDestinatario.getSaldo();
-        saldoDestinatario += valor;
+        saldoDestinatario += valor-200;
         cuentaDestinatario.setSaldo(saldoDestinatario);
     }
 
