@@ -39,4 +39,24 @@ public class BancoTest {
         assertNull(usuarioEliminado);
     }
 
+    @Test
+    public void crearCuentaTest(){
+        banco.crearUsuario("Valen", "Armeia", "123456", "valen@gmail.com", "123456");
+        Usuario usuario = banco.buscarUsuario("123456");
+        String numeroCuenta = banco.crearCuenta(500000, usuario);
+        assertNotEquals("", numeroCuenta);
+        Cuenta cuenta = banco.buscarCuenta(numeroCuenta);
+        assertNotNull(cuenta);
+    }
+
+    @Test
+    public void consultarSaldoCuentaTest(){
+        banco.crearUsuario("Valen", "Armeia", "123456", "valen@gmail.com", "123456");
+        Usuario usuario = banco.buscarUsuario("123456");
+        String numeroCuenta = banco.crearCuenta(500000, usuario);
+        Cuenta cuenta = banco.buscarCuenta(numeroCuenta);
+        String mensajeRespuesta = banco.consultarSaldoCuenta("123456", "123456", numeroCuenta);
+        assertNotEquals("", mensajeRespuesta);
+    }
+
 }
