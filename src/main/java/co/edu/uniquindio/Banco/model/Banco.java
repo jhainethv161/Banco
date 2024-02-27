@@ -179,6 +179,15 @@ public class Banco {
         }
     }
 
+    public boolean iniciarSesion(String idUsuario, String contrasena){
+        boolean login = false;
+        Usuario usuario = buscarUsuario(idUsuario);
+        if (usuario!= null && usuario.getContrasena().equals(contrasena)){
+            login = true;
+        }
+        return login;
+    }
+
     public String mostrarTransacciones(String idCuenta){
         Cuenta cuenta = buscarCuenta(idCuenta);
         if (cuenta != null){
